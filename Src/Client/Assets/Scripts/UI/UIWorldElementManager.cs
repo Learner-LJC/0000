@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIWorldElementManager : MonoSingleton<UIWorldElementManager> {
-
+public class UIWorldElementManager : MonoSingleton<UIWorldElementManager>
+{
     public GameObject nameBarPrefab;
 
     private Dictionary<Transform, GameObject> elements = new Dictionary<Transform, GameObject>();
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    protected override void OnStart()
+    {
+        nameBarPrefab.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
