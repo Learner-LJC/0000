@@ -65,6 +65,8 @@ ModelImporter:
     100118: Bone003
     100120: Dummy001
     100122: //RootNode
+    100124: treasure_redmob
+    100126: treasure_redmob_weapon
     400000: Bip001
     400002: Bip001 Footsteps
     400004: Bip001 Head
@@ -127,8 +129,15 @@ ModelImporter:
     400118: Bone003
     400120: Dummy001
     400122: //RootNode
+    400124: treasure_redmob
+    400126: treasure_redmob_weapon
+    2100000: 'Material #25'
+    4300000: treasure_redmob
+    4300002: treasure_redmob_weapon
     7400000: treasure_redmob_move_forward
     9500000: //RootNode
+    13700000: treasure_redmob
+    13700002: treasure_redmob_weapon
   externalObjects: {}
   materials:
     importMaterials: 1

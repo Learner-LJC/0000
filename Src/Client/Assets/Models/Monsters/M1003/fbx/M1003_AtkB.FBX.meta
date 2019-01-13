@@ -135,6 +135,7 @@ ModelImporter:
     4300000: treasure_redmob
     4300002: treasure_redmob_weapon
     7400000: treasure_redmob_AtkB
+    7400002: M1003_AtkB
     9500000: //RootNode
     13700000: treasure_redmob
     13700002: treasure_redmob_weapon
