@@ -24,8 +24,6 @@ public class UINameBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         this.UpdateInfo();
-
-        this.transform.forward = Camera.main.transform.forward;
 	}
 
     void UpdateInfo()

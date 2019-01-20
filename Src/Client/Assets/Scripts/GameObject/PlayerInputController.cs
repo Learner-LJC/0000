@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Entities;
 using SkillBridge.Message;
+using Services;
 
 public class PlayerInputController : MonoBehaviour {
 
@@ -31,7 +32,7 @@ public class PlayerInputController : MonoBehaviour {
             NCharacterInfo cinfo = new NCharacterInfo();
             cinfo.Id = 1;
             cinfo.Name = "Test";
-            cinfo.Tid = 1;
+            cinfo.ConfigId = 1;
             cinfo.Entity = new NEntity();
             cinfo.Entity.Position = new NVector3();
             cinfo.Entity.Direction = new NVector3();
@@ -116,8 +117,10 @@ public class PlayerInputController : MonoBehaviour {
         this.speed = (int)(offset.magnitude * 100f / Time.deltaTime);
         //Debug.LogFormat("LateUpdate velocity {0} : {1}", this.rb.velocity.magnitude, this.speed);
         this.lastPos = this.rb.transform.position;
-        
-        if ((GameObjectTool.WorldToLogic(this.rb.transform.position) - this.character.position).magnitude > 50)
+
+        Vector3Int goLogicPos = GameObjectTool.WorldToLogic(this.rb.transform.position);
+        float logicOffset = (goLogicPos - this.character.position).magnitude;
+        if (logicOffset > 100)
         {
             this.character.SetPosition(GameObjectTool.WorldToLogic(this.rb.transform.position));
             this.SendEntityEvent(EntityEvent.None);
@@ -129,5 +132,6 @@ public class PlayerInputController : MonoBehaviour {
     {
         if (entityController != null)
             entityController.OnEntityEvent(entityEvent);
+        MapService.Instance.SendMapEntitySync(entityEvent,this.character.EntityData);
     }
 }

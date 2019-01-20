@@ -15,22 +15,28 @@ public class UIMinimap : MonoBehaviour {
     private Transform playerTransform;
 	// Use this for initialization
 	void Start () {
-        this.InitMap();
+        Debug.LogWarning("UIMinimap Start " + this.GetInstanceID());
+        MinimapManager.Instance.Minimap = this;
+        this.UpdateMap();
     }
 
-    void InitMap()
+    public void UpdateMap()
     {
         this.mapName.text = User.Instance.CurrentMapData.Name;
-        if (this.minimap.overrideSprite == null)
-            this.minimap.overrideSprite = MinimapManager.Instance.LoadCurrentMinimap();
-
+        this.minimap.overrideSprite = MinimapManager.Instance.LoadCurrentMinimap();
         this.minimap.SetNativeSize();
         this.minimap.transform.localPosition = Vector3.zero;
-        this.playerTransform = User.Instance.CurrentCharacterObject.transform;
+        this.minimapBoundingBox = MinimapManager.Instance.MinimapBoundingBox;
+        this.playerTransform = null;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (playerTransform == null)
+            playerTransform = MinimapManager.Instance.PlayerTransform;
+
+        if (minimapBoundingBox == null || playerTransform == null) return;
         float realWidth = minimapBoundingBox.bounds.size.x;
         float realHeight = minimapBoundingBox.bounds.size.z;
 

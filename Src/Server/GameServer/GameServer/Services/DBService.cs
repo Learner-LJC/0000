@@ -12,6 +12,8 @@ namespace GameServer.Services
     {
         ExtremeWorldEntities entities;
 
+
+
         public ExtremeWorldEntities Entities
         {
             get { return this.entities; }
@@ -20,6 +22,16 @@ namespace GameServer.Services
         public void Init()
         {
             entities = new ExtremeWorldEntities();
+
+           
+        }
+
+        public void Save(bool async = false)
+        {
+            if (async)
+                entities.SaveChangesAsync();
+            else
+                entities.SaveChanges();
         }
     }
 }

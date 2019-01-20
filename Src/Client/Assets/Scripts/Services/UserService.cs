@@ -7,6 +7,8 @@ using Network;
 using UnityEngine;
 
 using SkillBridge.Message;
+using Models;
+using Managers;
 
 namespace Services
 {
@@ -229,7 +231,7 @@ namespace Services
             message.Request = new NetMessageRequest();
             message.Request.gameEnter = new UserGameEnterRequest();
             message.Request.gameEnter.characterIdx = characterIdx;
-            NetClient.Instance.SendMessage(message);
+            NetClient.Instance.SendMessage(message); 
         }
 
         void OnGameEnter(object sender, UserGameEnterResponse response)
@@ -238,7 +240,16 @@ namespace Services
 
             if (response.Result == Result.Success)
             {
-
+                if(response.Character!=null)
+                {
+                    User.Instance.CurrentCharacter = response.Character;
+                    ItemManager.Instance.Init(response.Character.Items);
+                    BagManager.Instance.Init(response.Character.Bag);
+                    EquipManager.Instance.Init(response.Character.Equips);
+                    QuestManager.Instance.Init(response.Character.Quests);
+                    FriendManager.Instance.Init(response.Character.Friends);
+                    GuildManager.Instance.Init(response.Character.Guild);
+                }
             }
         }
 
@@ -254,6 +265,8 @@ namespace Services
 
         void OnGameLeave(object sender, UserGameLeaveResponse response)
         {
+            MapService.Instance.CurrentMapId = 0;
+            User.Instance.CurrentCharacter = null;
             Debug.LogFormat("OnGameLeave:{0} [{1}]", response.Result, response.Errormsg);
         }
     }
