@@ -68,6 +68,7 @@ namespace Services
                 MapDefine map = DataManager.Instance.Maps[mapId];
                 User.Instance.CurrentMapData = map;
                 SceneManager.Instance.LoadScene(map.Resource);
+                SoundManager.Instance.PlayMusic(map.Music);
             }
             else
                 Debug.LogErrorFormat("EnterMap: Map {0} not existed", mapId);
@@ -75,7 +76,7 @@ namespace Services
 
 
 
-        public void SendMapEntitySync(EntityEvent entityEvent, NEntity entity)
+        public void SendMapEntitySync(EntityEvent entityEvent, NEntity entity,int param)
         {
             Debug.LogFormat("MapEntityUpdateRequest :ID:{0} POS:{1} DIR:{2} SPD:{3} ", entity.Id, entity.Position.String(), entity.Direction.String(), entity.Speed);
             NetMessage message = new NetMessage();
@@ -85,7 +86,8 @@ namespace Services
             {
                 Id = entity.Id,
                 Event = entityEvent,
-                Entity = entity
+                Entity = entity,
+                Param = param
             };
             NetClient.Instance.SendMessage(message);
         }
